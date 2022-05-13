@@ -7,16 +7,11 @@ public class UserConverter {
 
     public static final UserTO convertToTO(User entity) {
         return new UserTO(entity.getId(), entity.getFirstName(),
-                entity.getLastName(), entity.getEmail(), entity.getPhone());
+                entity.getLastName(), entity.getEmail(), entity.getPhone(), entity.getPassword());
     }
 
     public static final User convertFromTO(UserTO entity) {
-        User user = new User();
-        user.setId(entity.getId());
-        user.setPhone(entity.getPhone());
-        user.setFirstName(entity.getFirstName());
-        user.setLastName(entity.getLastName());
-        return user;
+        return new User(entity.getId(), entity.getPassword(), entity.getFirstName(), entity.getLastName(), entity.getEmail(), entity.getPhone());
     }
 
 }

@@ -36,5 +36,23 @@ public class User {
 
     @Column
     private String profileImage;
+    public User(){
+        this.id = null;
+        this.password = null;
+        this.firstName = null;
+        this.lastName = null;
+        this.email = null;
+        this.phone = null;
+        this.profileImage = null;
+    }
 
+    public User(Long id, String password, String firstName, String lastName, String email, String phone) {
+        this.id = id;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+        this.profileImage = null;
+    }
 }
