@@ -18,4 +18,5 @@ public class UserTO implements Serializable {
     private String email;
 
     private String phone;
+
 }
