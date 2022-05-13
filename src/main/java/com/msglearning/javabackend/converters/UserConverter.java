@@ -10,4 +10,13 @@ public class UserConverter {
                 entity.getLastName(), entity.getEmail(), entity.getPhone());
     }
 
+    public static final User convertFromTO(UserTO entity) {
+        User user = new User();
+        user.setId(entity.getId());
+        user.setPhone(entity.getPhone());
+        user.setFirstName(entity.getFirstName());
+        user.setLastName(entity.getLastName());
+        return user;
+    }
+
 }
