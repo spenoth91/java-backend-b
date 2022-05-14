@@ -18,10 +18,10 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public User save(User user) {
-
+    public UserTO save(UserTO userTO) {
+        User user = UserConverter.convertToEntity(userTO);
         //validate Phone
-        if ( !validatePhoneNumber(user.getPhone()) ){
+        if (!validatePhoneNumber(user.getPhone())){
             return null;
         }
         //validate email
@@ -40,8 +40,8 @@ public class UserService {
         if( !validatePassword(user.getPassword()) ){
             return null;
         }
-
-        return userRepository.save(user);
+        user.setPassword(PasswordService.hashPassword(user.getPassword()));
+        return UserConverter.convertToTO(userRepository.save(user));
     }
 
     public List<UserTO> findAll() {
