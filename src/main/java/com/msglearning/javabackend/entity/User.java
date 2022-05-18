@@ -3,13 +3,15 @@ package com.msglearning.javabackend.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Table(name = User.TABLE_NAME)
 @Entity
 public class User {
 
-    static final String TABLE_NAME = "user";
+    static final String TABLE_NAME = "users";
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -31,6 +33,9 @@ public class User {
     @Column(unique = true,
             nullable = false)
     private String phone;
+
+    @OneToMany(mappedBy = "user")
+    private List<Rating> ratings = new ArrayList<>();
 
     @Column
     private String profileImage;
