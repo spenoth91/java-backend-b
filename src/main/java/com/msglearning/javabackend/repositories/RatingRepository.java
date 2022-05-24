@@ -6,16 +6,17 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface RatingRepository extends CrudRepository<Rating, Long> {
 
     /*
-        For native query use:
-        @Query(value = "SELECT r FROM Ratings r WHERE r.movieId = :id", nativeQuery = true)
-     */
-    @Query("SELECT r FROM Rating r WHERE r.movie = :id")
-    List<Rating> getRatingsByMovieId(@Param("id") Long id);
+        For native query:
+        @Query(value = "SELECT * FROM Ratings WHERE movie_id = :id", nativeQuery = true)
+    */
+    @Query("SELECT r FROM Rating r WHERE r.movie.id = :id")
+    Optional<Rating> findByMovieId(@Param("id") Long id);
 
-    @Query("SELECT r FROM Rating r WHERE r.user = :id")
-    List<Rating> getRatingsByUserId(@Param("id") Long id);
+    @Query("SELECT r FROM Rating r WHERE r.user.id = :id")
+    Optional<Rating> findByUserId(@Param("id") Long id);
 }
