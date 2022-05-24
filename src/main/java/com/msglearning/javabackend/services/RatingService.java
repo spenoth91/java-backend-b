@@ -10,6 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class RatingService {
@@ -43,6 +47,16 @@ public class RatingService {
 
     public void deleteById(Long ratingId) {
         ratingRepository.deleteById(ratingId);
+    }
+
+    public Optional<RatingTO> findByMovieId(Long id) {
+        return ratingRepository.findByMovieId(id)
+                .map(RatingConverter::convertToTO);
+    }
+
+    public Optional<RatingTO> findByUserId(Long id) {
+        return ratingRepository.findByUserId(id)
+                .map(RatingConverter::convertToTO);
     }
 
     private Boolean validateValue(Integer value) {
