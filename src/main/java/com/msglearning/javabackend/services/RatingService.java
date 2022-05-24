@@ -4,25 +4,31 @@ import com.msglearning.javabackend.converters.RatingConverter;
 import com.msglearning.javabackend.entity.Movie;
 import com.msglearning.javabackend.entity.Rating;
 import com.msglearning.javabackend.entity.User;
+import com.msglearning.javabackend.repositories.MovieRepository;
 import com.msglearning.javabackend.repositories.RatingRepository;
+import com.msglearning.javabackend.repositories.UserRepository;
 import com.msglearning.javabackend.to.RatingTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class RatingService {
 
     @Autowired
     RatingRepository ratingRepository;
+    @Autowired
+    MovieRepository movieRepository;
+    @Autowired
+    UserRepository userRepository;
 
     public RatingTO save(RatingTO ratingTO) {
         Rating rating = RatingConverter.convertToEntity(ratingTO);
+        rating.setUser(userRepository.findById(ratingTO.getUserId()).get());
+        rating.setMovie(movieRepository.findById(ratingTO.getMovieId()).get());
+        rating.setDate(LocalDate.now());
         if (!validateComment(rating.getComment())) {
             return null;
         }
