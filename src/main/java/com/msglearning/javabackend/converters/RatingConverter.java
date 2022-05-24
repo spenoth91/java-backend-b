@@ -11,8 +11,8 @@ public class RatingConverter {
                 entity.getValue(),
                 entity.getComment(),
                 entity.getDate(),
-                entity.getMovie(),
-                entity.getUser()
+                entity.getMovie().getId(),
+                entity.getUser().getId()
         );
     }
 
@@ -22,8 +22,8 @@ public class RatingConverter {
                 ratingTO.getValue(),
                 ratingTO.getComment(),
                 ratingTO.getDate(),
-                ratingTO.getMovie(),
-                ratingTO.getUser()
+                null,
+                null
         );
     }
 }
