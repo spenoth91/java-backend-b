@@ -1,7 +1,5 @@
 package com.msglearning.javabackend.to;
 
-import com.msglearning.javabackend.entity.Movie;
-import com.msglearning.javabackend.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -20,7 +18,7 @@ public class RatingTO implements Serializable {
 
     private LocalDate date;
 
-    private Movie movie;
+    private Long movieId;
 
-    private User user;
+    private Long userId;
 }
