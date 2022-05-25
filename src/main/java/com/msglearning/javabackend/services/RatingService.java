@@ -9,6 +9,7 @@ import com.msglearning.javabackend.repositories.RatingRepository;
 import com.msglearning.javabackend.repositories.UserRepository;
 import com.msglearning.javabackend.to.RatingTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -24,35 +25,42 @@ public class RatingService {
     @Autowired
     UserRepository userRepository;
 
-    public RatingTO save(RatingTO ratingTO) {
+    public Boolean save(RatingTO ratingTO) {
         Rating rating = RatingConverter.convertToEntity(ratingTO);
         rating.setUser(userRepository.findById(ratingTO.getUserId()).get());
         rating.setMovie(movieRepository.findById(ratingTO.getMovieId()).get());
         rating.setDate(LocalDate.now());
         if (!validateComment(rating.getComment())) {
-            return null;
+            return false;
         }
         if (!validateDate(rating.getDate())) {
-            return null;
+            return false;
         }
         if (!validateValue(rating.getValue())) {
-            return null;
+            return false;
         }
         if (!validateMovie(rating.getMovie())) {
-            return null;
+            return false;
         }
         if (!validateUser(rating.getUser())) {
-            return null;
+            return false;
         }
-        return RatingConverter.convertToTO(ratingRepository.save(rating));
+        ratingRepository.save(rating);
+        return true;
     }
 
     public void delete(RatingTO ratingTO) {
         ratingRepository.delete(RatingConverter.convertToEntity(ratingTO));
     }
 
-    public void deleteById(Long ratingId) {
-        ratingRepository.deleteById(ratingId);
+    public Boolean deleteById(Long ratingId) {
+        try {
+            ratingRepository.deleteById(ratingId);
+        }
+        catch (EmptyResultDataAccessException ex) {
+            return false;
+        }
+        return true;
     }
 
     public Optional<RatingTO> findByMovieId(Long id) {

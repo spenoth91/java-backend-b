@@ -14,7 +14,7 @@ public class RatingController {
     public static final String USER_ID_PATH = "/userId/{userId}";
     public static final String MOVIE_ID_PATH = "/movieId/{movieId}";
     public static final String SAVE_PATH = "/save";
-    public static final String DELETE_PATH = "/delete";
+    public static final String DELETE_PATH = "/delete/{ratingId}";
 
     @Autowired
     RatingService ratingService;
@@ -30,12 +30,12 @@ public class RatingController {
     }
 
     @PostMapping(SAVE_PATH)
-    public RatingTO save(@RequestBody RatingTO ratingTO) {
+    public Boolean save(@RequestBody RatingTO ratingTO) {
         return ratingService.save(ratingTO);
     }
 
     @DeleteMapping(DELETE_PATH)
-    public void delete(@RequestBody Long ratingId) {
-        ratingService.deleteById(ratingId);
+    public Boolean delete(@PathVariable Long ratingId) {
+        return ratingService.deleteById(ratingId);
     }
 }
