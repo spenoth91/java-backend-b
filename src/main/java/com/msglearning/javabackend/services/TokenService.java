@@ -17,7 +17,7 @@ public class TokenService {
 
     public static final String NAME = "name";
     public static final String ID = "id";
-    public static final Key secret = MacProvider.generateKey(SignatureAlgorithm.ES256);
+    public static final Key secret = MacProvider.generateKey(SignatureAlgorithm.HS256);
     static final byte[] secretBytes = secret.getEncoded();
     public static final String base64SecretBytes = Base64.getEncoder().encodeToString(secretBytes);
     private static final String TOKEN_PREFIX = "{\"token\":\"";
