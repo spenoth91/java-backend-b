@@ -40,7 +40,11 @@ public class UserService {
         if( !validatePassword(user.getPassword()) ){
             return null;
         }
-        user.setPassword(PasswordService.hashPassword(user.getPassword()));
+        try {
+            user.setPassword(PasswordService.hashPassword(user.getPassword()));
+        } catch (Exception e) {
+            return null;
+        }
         return UserConverter.convertToTO(userRepository.save(user));
     }
 

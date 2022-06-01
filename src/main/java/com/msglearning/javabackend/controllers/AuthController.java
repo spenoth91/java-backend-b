@@ -1,6 +1,7 @@
 package com.msglearning.javabackend.controllers;
 
 import com.msglearning.javabackend.entity.User;
+import com.msglearning.javabackend.services.PasswordService;
 import com.msglearning.javabackend.services.TokenService;
 import com.msglearning.javabackend.services.UserService;
 import com.msglearning.javabackend.to.UserTO;
@@ -45,7 +46,8 @@ public class AuthController {
         }
 
         Optional<User> userOptional = this.userService.findByEmail(email);
-        if (userOptional.isPresent()) {
+        if (userOptional.isPresent()
+                && PasswordService.checkPassword(password, userOptional.get().getPassword())) {
             return this.tokenService.createTokenHeader(
                     userOptional.get().getEmail()
             );
