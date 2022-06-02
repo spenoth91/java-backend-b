@@ -50,6 +50,8 @@ public class MovieService {
 
     public Optional<List<Movie>> findByCategory(String category) { return movieRepository.getMoviesByCategory(category); }
 
+    public List<Movie> findAll() { return (List<Movie>) movieRepository.findAll(); }
+
     private boolean validateTitle(String title) {
         return  (title.length() > 0 && movieRepository.getMovieByTitle(title).isEmpty());
     }
