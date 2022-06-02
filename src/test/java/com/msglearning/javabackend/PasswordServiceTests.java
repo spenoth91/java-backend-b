@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PasswordServiceTests {
 
     @Test
-    void passwordHashFunctionReturnTest() {
+    void passwordHashFunctionReturnTest() throws Exception {
 
         // initial test password
         String password = "iliketosleep123";
