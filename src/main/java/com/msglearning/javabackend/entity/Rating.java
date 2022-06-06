@@ -1,5 +1,6 @@
 package com.msglearning.javabackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -25,10 +26,12 @@ public class Rating {
     @Column
     private LocalDate date;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "movie_id")
     private Movie movie;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
