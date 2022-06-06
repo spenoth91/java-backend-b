@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping({ ControllerConstants.API_PATH_MOVIE })
@@ -27,12 +28,7 @@ public class MovieController {
     }
 
     @GetMapping(KEYWORD_PATH)
-    public HashMap<String, Movie> getByKeyword(@PathVariable String k) {
-        HashMap<String, Movie> movies = new HashMap<>();
-
-        this.movieService.findByTitle(k)
-                .ifPresent(movie -> movies.put(movie.getTitle(), movie));
-
-        return movies;
+    public List<Movie> getByKeyword(@PathVariable String k) {
+        return movieService.findByTitle(k).stream().collect(Collectors.toList());
     }
 }
