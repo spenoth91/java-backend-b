@@ -2,13 +2,17 @@ package com.msglearning.javabackend.services;
 
 import com.msglearning.javabackend.converters.MovieConverter;
 import com.msglearning.javabackend.entity.Movie;
+import com.msglearning.javabackend.entity.Rating;
 import com.msglearning.javabackend.repositories.MovieRepository;
 import com.msglearning.javabackend.to.MovieTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class MovieService {
@@ -72,5 +76,14 @@ public class MovieService {
         return !(category == null || category.length() == 0);
     }
 
+    public List<Movie> findFeatured() {
+        List<Movie> movies = StreamSupport.stream(movieRepository.findAll().spliterator(), false).sorted((o1, o2) -> {
+            //double avgRatingOfFirst = o1.getRatings().stream().mapToDouble(Rating::getValue).average().orElse(0);
+            //double avgRatingOfSecond = o2.getRatings().stream().mapToDouble(Rating::getValue).average().orElse(0);
+            return (o2.getYear() - o1.getYear());
+        }).collect(Collectors.toList());
 
+        return movies.size() > 5 ? movies.subList(0, 5) : movies;
+
+    }
 }

@@ -19,6 +19,8 @@ public class MovieController {
     public static final String ALL_PATH = "/all";
     public static final String KEYWORD_PATH = "/k/{k}";
 
+    public static final String FEATURED_PATH = "/featured";
+
     @Autowired
     MovieService movieService;
 
@@ -30,5 +32,10 @@ public class MovieController {
     @GetMapping(KEYWORD_PATH)
     public List<Movie> getByKeyword(@PathVariable String k) {
         return movieService.findByTitle(k).stream().collect(Collectors.toList());
+    }
+
+    @GetMapping(FEATURED_PATH)
+    public List<Movie> getFeatured() {
+        return movieService.findFeatured();
     }
 }
