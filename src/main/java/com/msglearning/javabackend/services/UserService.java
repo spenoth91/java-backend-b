@@ -90,7 +90,7 @@ public class UserService {
     }
 
     private Boolean validatePassword(String password){
-        return password != null;
+        return password != null && password.length() >= 8;
     }
 
     private Boolean validatePhoneNumber(String phoneNumber){
