@@ -8,6 +8,7 @@ import com.msglearning.javabackend.repositories.MovieRepository;
 import com.msglearning.javabackend.repositories.RatingRepository;
 import com.msglearning.javabackend.repositories.UserRepository;
 import com.msglearning.javabackend.to.RatingTO;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -47,6 +48,16 @@ public class RatingService {
         }
         ratingRepository.save(rating);
         return true;
+    }
+
+    public Rating update(RatingTO ratingTO) {
+        var ratingOptional = ratingRepository.findById(ratingTO.getId());
+        if (ratingOptional.isEmpty()) return null;
+        var rating = ratingOptional.get();
+        rating.setComment(rating.getComment());
+        rating.setValue(rating.getValue());
+        rating.setDate(LocalDate.now());
+        return ratingRepository.save(rating);
     }
 
     public void delete(RatingTO ratingTO) {

@@ -20,21 +20,27 @@ public class MovieService {
         Movie movie = MovieConverter.convertToEntity(movieTO);
 
         if (!validateTitle(movie.getTitle())) {
+            System.out.println(1);
             return null;
         }
         if (!validateDuration(movie.getDuration())) {
+            System.out.println(2);
             return null;
         }
         if (!validateYear(movie.getYear())) {
+            System.out.println(3);
             return null;
         }
         if(!validateDirector(movie.getDirector())) {
+            System.out.println(4);
             return null;
         }
         if(!validateCategory(movieTO.getCategory())){
+            System.out.println(5);
             return null;
         }
 
+        System.out.println("all good in service");
         return MovieConverter.convertToTO(movieRepository.save(movie));
     }
 
@@ -42,7 +48,7 @@ public class MovieService {
         return movieRepository.findById(id);
     }
 
-    public Optional<Movie> findByTitle(String title) { return movieRepository.getMovieByTitle(title); }
+    public Optional<List<Movie>> findByTitle(String title) { return movieRepository.getMovieByTitle(title); }
 
     public Optional<List<Movie>> findByDuration(Integer min, Integer max) { return movieRepository.getMoviesByDurationInterval(min, max); }
 
@@ -53,7 +59,7 @@ public class MovieService {
     public List<Movie> findAll() { return (List<Movie>) movieRepository.findAll(); }
 
     private boolean validateTitle(String title) {
-        return  (title.length() > 0 && movieRepository.getMovieByTitle(title).isEmpty());
+        return !title.isEmpty();
     }
 
     private boolean validateYear(Integer year) {

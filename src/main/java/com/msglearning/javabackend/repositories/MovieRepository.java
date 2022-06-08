@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface MovieRepository extends CrudRepository<Movie, Long > {
 
     @Query("SELECT m FROM Movie m WHERE m.title like %:title%")
-    Optional<Movie> getMovieByTitle(@Param("title") String title);
+    Optional<List<Movie>> getMovieByTitle(@Param("title") String title);
 
     @Query("SELECT m FROM Movie m WHERE m.duration BETWEEN :minDuration and :maxDuration")
     Optional<List<Movie>> getMoviesByDurationInterval(@Param("maxDuration") Integer minDuration, @Param("maxDuration") Integer maxDuration);

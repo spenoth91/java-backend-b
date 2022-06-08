@@ -71,6 +71,13 @@ public class TokenService {
         return claims.getBody().get(NAME).toString();
     }
 
+    public String getUserEmail(String token) {
+        Jws<Claims> claims = Jwts.parser()
+                .setSigningKey(base64SecretBytes)
+                .parseClaimsJws(token);
+        return claims.getBody().get(ID).toString();
+    }
+
     private void logClaims(Claims claimsBody,StringBuilder toLog) {
         String separator = System.getProperty("line.separator");
         toLog.append(separator);
@@ -78,5 +85,13 @@ public class TokenService {
         toLog.append("Name: " + claimsBody.get(NAME) + separator);
         toLog.append("Expiration: " + claimsBody.getExpiration() + separator);
         LOG.debug(toLog.toString());
+    }
+
+    public String resolveToken(final String bearerToken) {
+        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+            String token = bearerToken.substring(7);
+            return getUserName(token);
+        }
+        return null;
     }
 }
